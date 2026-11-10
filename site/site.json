@@ -1,0 +1,12 @@
+{
+  "name": "Carver",
+  "tagline": "music + short poems",
+  "location": "Los Angeles, CA",
+  "email": "you@example.com",
+  "siteUrl": "https://example.com",
+  "music": [
+    { "label": "bandcamp", "url": "https://yourname.bandcamp.com" },
+    { "label": "spotify", "url": "https://open.spotify.com/artist/YOUR_ID" },
+    { "label": "youtube music", "url": "https://music.youtube.com/channel/YOUR_ID" }
+  ]
+}

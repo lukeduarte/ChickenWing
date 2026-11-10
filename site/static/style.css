@@ -1,0 +1,325 @@
+/* Theme: murky dusk clouds, film grain, glitchy letterspaced type.
+   Dark only, on purpose. */
+
+:root {
+  --bg: #0c0c10;
+  --fg: #c9c8cf;
+  --dim: #7d7d88;
+  --link: #d6d5dc;
+  --rule: #2c2c36;
+  --cloud-a: #3a3a4c;   /* bruised grey-violet */
+  --cloud-b: #34463f;   /* murky green */
+  --tx: #e68fc4;        /* transmitter + start of the beam (pink) */
+  --rx: #7fd0e6;        /* receiver + end of the beam (blue) */
+}
+
+* { box-sizing: border-box; }
+
+html {
+  background: var(--bg);
+  color-scheme: dark;
+}
+
+body {
+  position: relative;
+  margin: 0 auto;
+  max-width: 62ch;
+  padding: 8vh 1.5rem 6rem;
+  min-height: 100vh;
+  color: var(--fg);
+  background: transparent;
+  font-family: "Courier New", Courier, ui-monospace, monospace;
+  font-size: 16px;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+}
+
+/* ---- background layer 1: smoky clouds ---- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -10%;
+  z-index: -2;
+  background:
+    radial-gradient(60% 22% at 30% 62%, var(--cloud-a) 0%, transparent 100%),
+    radial-gradient(55% 14% at 65% 72%, var(--cloud-b) 0%, transparent 100%),
+    radial-gradient(70% 20% at 50% 48%, rgba(70, 70, 92, 0.55) 0%, transparent 100%),
+    radial-gradient(50% 18% at 20% 88%, rgba(60, 60, 78, 0.6) 0%, transparent 100%),
+    var(--bg);
+  filter: blur(26px);
+}
+
+header p { margin: 0; }
+header .dim, .dim { color: var(--dim); }
+
+/* glitchy, wide-spaced name */
+header .name {
+  font-size: 1.35rem;
+  letter-spacing: 0.32em;
+}
+header .name a {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--fg);
+}
+header .name a::before,
+header .name a::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+header .name a::before {
+  color: #8fa8a0;
+  transform: translateX(-1.5px);
+  clip-path: inset(0 0 62% 0);
+  opacity: 0.7;
+}
+header .name a::after {
+  color: #a597b8;
+  transform: translateX(1.5px);
+  clip-path: inset(58% 0 0 0);
+  opacity: 0.7;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  header .name a::before { animation: slice-a 6s steps(1) infinite; }
+  header .name a::after  { animation: slice-b 7s steps(1) infinite; }
+}
+
+@keyframes slice-a {
+  0%, 100% { clip-path: inset(0 0 62% 0); transform: translateX(-1.5px); }
+  12%      { clip-path: inset(10% 0 55% 0); transform: translateX(-3px); }
+  13%      { clip-path: inset(0 0 62% 0); transform: translateX(-1.5px); }
+  58%      { clip-path: inset(30% 0 35% 0); transform: translateX(2px); }
+  60%      { clip-path: inset(0 0 62% 0); transform: translateX(-1.5px); }
+}
+@keyframes slice-b {
+  0%, 100% { clip-path: inset(58% 0 0 0); transform: translateX(1.5px); }
+  30%      { clip-path: inset(40% 0 25% 0); transform: translateX(3px); }
+  31%      { clip-path: inset(58% 0 0 0); transform: translateX(1.5px); }
+  80%      { clip-path: inset(66% 0 8% 0); transform: translateX(-2px); }
+  82%      { clip-path: inset(58% 0 0 0); transform: translateX(1.5px); }
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  margin: 1.8rem 0;
+}
+
+a {
+  color: var(--link);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--dim);
+}
+a:hover {
+  color: #fff;
+  text-decoration-color: #fff;
+  text-shadow: 0 0 8px rgba(160, 175, 200, 0.45);
+}
+a:focus-visible { outline: 1px dashed var(--fg); outline-offset: 4px; }
+
+nav.links a, ul.plain a { display: inline-block; }
+nav.links div { margin: 0.1rem 0; }
+
+ul.plain { list-style: none; margin: 0; padding: 0; }
+ul.plain li { margin: 0.35rem 0; }
+ul.plain .date { color: var(--dim); margin-right: 1.2ch; }
+
+pre {
+  font-family: inherit;
+  margin: 0;
+  overflow-x: auto;
+}
+pre.art {
+  color: var(--dim);
+  line-height: 1.15;
+  font-size: 14px;
+  letter-spacing: 0;
+  opacity: 0.8;
+}
+
+.poem {
+  white-space: pre-wrap;
+  margin: 0;
+  font-family: inherit;
+  line-height: 1.9;
+}
+
+.prose p { margin: 0 0 1.2rem; }
+
+footer { margin-top: 3rem; color: var(--dim); font-size: 14px; }
+
+::selection { background: #3b3b4c; color: #fff; }
+
+/* ---- home: links scattered like stars ---- */
+body.home {
+  max-width: none;
+  padding: 0;
+  overflow-x: hidden;
+}
+body.home header {
+  position: absolute;
+  top: 8vh;
+  left: clamp(1.5rem, 7vw, 6rem);
+  z-index: 2;
+}
+
+.sky {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+}
+
+.sky .dust {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+/* text-art sky: layer is filled in by sky.js */
+.sky .layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.orb,
+.wave,
+.antenna {
+  position: absolute;
+  margin: 0;
+  overflow: visible;
+  white-space: pre;
+  letter-spacing: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.orb {
+  font-size: 13px;
+  line-height: 1.1;
+  color: #9b9bab;
+  opacity: var(--o, 0.6);
+}
+
+.wave {
+  font-size: 17px;
+  line-height: 1;
+  color: #b8c4d2;
+  opacity: 0.45;
+  transform: translate(-50%, -50%) rotate(var(--rot, 0deg));
+}
+
+.antenna {
+  font-size: 13px;
+  line-height: 1.15;
+  color: #a2a2b0;
+  opacity: 0.9;
+}
+.antenna.tx { top: 3vh; right: clamp(1rem, 4vw, 4rem); color: var(--tx); }
+.antenna.rx { bottom: 3vh; left: clamp(1rem, 4vw, 4rem); color: var(--rx); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .orb.twinkle { animation: twinkle var(--t, 5s) ease-in-out var(--d, 0s) infinite; }
+  .wave { animation: beam 3.6s ease-in-out var(--d, 0s) infinite; }
+}
+@keyframes beam {
+  0%, 100% { opacity: 0.1; }
+  10%      { opacity: 0.95; text-shadow: 0 0 8px currentColor; }
+  35%      { opacity: 0.22; }
+}
+
+@media (max-width: 480px) {
+  .antenna { font-size: 10px; }
+  .orb { font-size: 11px; }
+  .wave { font-size: 12px; }
+}
+
+a.star {
+  position: absolute;
+  z-index: 1;
+  padding: 0.35rem 0.25rem;
+  font-size: var(--s, 1rem);
+  opacity: var(--o, 1);
+  white-space: nowrap;
+  text-decoration: none;
+  color: var(--link);
+}
+a.star::before {
+  content: "";
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  margin-right: 1.1ch;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 7px 1px rgba(190, 200, 230, 0.6);
+  vertical-align: middle;
+  transform: translateY(-1px);
+}
+a.star:hover,
+a.star:focus-visible {
+  opacity: 1;
+  color: #fff;
+  text-decoration: underline;
+  text-decoration-color: var(--dim);
+  text-underline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a.star {
+    animation: twinkle var(--t, 5s) ease-in-out var(--d, 0s) infinite;
+  }
+  a.star:hover,
+  a.star:focus-visible {
+    animation: none;
+  }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: var(--o, 1); }
+  50%      { opacity: calc(var(--o, 1) * 0.4); }
+}
+
+/* ---- grain + grit, over everything ---- */
+/* Static film grain: a grey noise tile blended with "overlay", so it both
+   lightens and darkens pixels (like real film) instead of laying a white
+   haze over the page. A second layer adds a few sparse dust specks. */
+html::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.6;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='256' height='256'><filter id='f' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' seed='9' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0.33 0.33 0.33 0 0  0 0 0 0 1'/><feComponentTransfer><feFuncR type='linear' slope='2.6' intercept='-0.8'/><feFuncG type='linear' slope='2.6' intercept='-0.8'/><feFuncB type='linear' slope='2.6' intercept='-0.8'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+}
+
+html::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  opacity: 0.12;
+  background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='d'><feTurbulence type='fractalNoise' baseFrequency='0.55' numOctaves='1' seed='7' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.85  0 0 0 0 0.85  0 0 0 0 0.9  0 0 0 9 -5.1'/></filter><rect width='100%' height='100%' filter='url(%23d)'/></svg>");
+}
+
+@media (max-width: 480px) {
+  body { font-size: 15px; padding-top: 5vh; }
+  header .name { font-size: 1.15rem; letter-spacing: 0.24em; }
+  pre.art { font-size: 12px; }
+}
